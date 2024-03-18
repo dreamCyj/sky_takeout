@@ -92,4 +92,28 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    @Override
+    public void disable(Employee employee) {
+        employee.setStatus(StatusConstant.DISABLE);
+        employeeMapper.disable(employee);
+    }
+    public void enable(Employee employee) {
+        employee.setStatus(StatusConstant.ENABLE);
+        employeeMapper.enable(employee);
+    }
+
+    @Override
+    public Employee get(Long id) {
+        Employee employee = employeeMapper.get(id);
+        employee.setPassword("******");//防止前端看到密码
+        return employee;
+    }
+
+    @Override
+    public void update(Employee employee) {
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        employeeMapper.update(employee);
+    }
+
 }
