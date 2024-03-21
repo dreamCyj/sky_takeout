@@ -12,6 +12,10 @@ spring:
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+    database: ${sky.redis.database}
 
 mybatis:
   #mapper配置文件
@@ -32,14 +36,24 @@ logging:
 sky:  #通过sky-common下的JwtProperties注解@ConfigurationProperties(prefix = "sky.jwt")起作用  配置属性类
   jwt:
     # 设置jwt签名加密时使用的秘钥
-    admin-secret-key: cyj1234
+    admin-secret-key: ${sky.jwt.admin-secret-key}
     # 设置jwt过期时间
-    admin-ttl: 7200000
+    admin-ttl: ${sky.jwt.admin-ttl}
     # 设置前端传递过来的令牌名称
-    admin-token-name: token
+    admin-token-name: ${sky.jwt.admin-token-name}
+    # 设置jwt签名加密时使用的秘钥
+    user-secret-key: ${sky.jwt.user-secret-key}
+    # 设置jwt过期时间
+    user-ttl: ${sky.jwt.user-ttl}
+    # 设置前端传递过来的令牌名称
+    user-token-name: ${sky.jwt.user-token-name}
   alioss:
     endpoint: ${sky.alioss.endpoint}
     access-key-id: ${sky.alioss.access-key-id}
     access-key-secret: ${sky.alioss.access-key-secret}
     bucket-name: ${sky.alioss.bucket-name}
-
+  wechat:
+    appid: ${sky.wechat.appid}
+    secret: ${sky.wechat.secret}
+pagehelper:
+  reasonable: ${pagehelper.reasonable}

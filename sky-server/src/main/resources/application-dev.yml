@@ -6,8 +6,32 @@ sky:
     database: sky_takeout
     username: root
     password: 1234
+  jwt:
+    # 设置jwt签名加密时使用的秘钥
+    admin-secret-key: cyj1234
+    # 设置jwt过期时间
+    admin-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    admin-token-name: token
+    # 设置jwt签名加密时使用的秘钥
+    user-secret-key: cyj1234
+    # 设置jwt过期时间
+    user-ttl: 7200000
+    # 设置前端传递过来的令牌名称
+    user-token-name: authentication
+
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
     access-key-id: LTAI5tM7R637hSP6Bg2ChkZb
     access-key-secret: w15PIEw7LidW8F70CtLomm5fJvACTc
     bucket-name: cyj-sky
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+  wechat:
+    appid: wx1ab34b192bfac035
+    secret: 29b06f24f113ce3373d2b7844b4d3431
+#解决非第一页执行分页条件查询查不到结果
+pagehelper:
+  reasonable: true
