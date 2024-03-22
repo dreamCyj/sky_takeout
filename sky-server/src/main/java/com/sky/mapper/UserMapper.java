@@ -14,4 +14,7 @@ public interface UserMapper {
     //@Insert("insert into user(openid) VALUES (#{openid})")
     //需要插入表后返回id，因此使用xml
     void insert(User user1);
+
+    @Select("select * from user where id = #{id}")
+    User getById(Long id);
 }

@@ -25,7 +25,7 @@ public class ShoppingCartController {
     public Result<String> add(@RequestBody ShoppingCartDTO shoppingCartDTO){
         log.info("添加购物车：{}", shoppingCartDTO);
         shoppingCartService.addShoppingCart(shoppingCartDTO);
-        return null;
+        return Result.success();
     }
     @ApiOperation("查看购物车")
     @GetMapping("/list")
