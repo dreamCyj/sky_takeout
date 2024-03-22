@@ -19,6 +19,7 @@ import com.sky.vo.OrderPaymentVO;
 import com.sky.vo.OrderStatisticsVO;
 import com.sky.vo.OrderSubmitVO;
 import com.sky.vo.OrderVO;
+import com.sky.websocket.WebSocketServer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -51,6 +49,8 @@ public class OrderServiceImpl implements OrderService {
     private AddressBookMapper addressBookMapper;
     @Autowired
     private WeChatPayUtil weChatPayUtil;
+    @Autowired
+    private WebSocketServer webSocketServer;
     private String orderNumber;//订单号
 
     /**
@@ -167,6 +167,15 @@ public class OrderServiceImpl implements OrderService {
                 .build();
 
         orderMapper.update(orders);
+        /**
+         * 来单提醒：支付成功后 通过websocket向客户端浏览器发送消息 type orderId content
+         */
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("type" ,1); //1.来单提醒 2.客户催单
+        map.put("orderId", ordersDB.getId());
+        map.put("content", "订单号" + outTradeNo);
+        String jsonString = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(jsonString);
     }
 
     @Override
@@ -395,5 +404,19 @@ public class OrderServiceImpl implements OrderService {
         orders.setDeliveryTime(LocalDateTime.now());
 
         orderMapper.update(orders);
+    }
+
+
+    public void reminder(Long id) {
+        Orders orders = orderMapper.getById(id);
+        if(orders == null || !Objects.equals(orders.getStatus(), Orders.TO_BE_CONFIRMED)){ //处于未接单状态的才能催单
+            throw new OrderBusinessException(MessageConstant.ORDER_STATUS_ERROR);
+        }
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("type" ,2);
+        map.put("orderId", id);
+        map.put("content", "订单号" + orders.getNumber());
+        String jsonString = JSON.toJSONString(map);
+        webSocketServer.sendToAllClient(jsonString);
     }
 }
