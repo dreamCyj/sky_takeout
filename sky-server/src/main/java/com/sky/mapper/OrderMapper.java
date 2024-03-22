@@ -54,4 +54,6 @@ public interface OrderMapper {
 
 
     Integer getCountByDate(Map<Object, Object> map);
+
+    List<GoodsSalesDTO> getSalesTop10(Map<Object, Object> map);
 }
