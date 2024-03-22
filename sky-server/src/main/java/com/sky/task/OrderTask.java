@@ -16,7 +16,9 @@ import java.util.stream.Collectors;
 public class OrderTask {
     @Autowired
     private OrderMapper orderMapper;
-    @Scheduled(cron = "0 * * * * ? ")//每分钟触发一次
+
+    @Scheduled(cron = "0 0 * * * ? ")//每小时触发一次
+    //@Scheduled(cron = "0 * * * * ? ")//每分钟触发一次
     public void processTimeoutOrder(){
         log.info("定时处理超时订单：{}", LocalDateTime.now());
         //select * from orders where status = ? and order_time < (当前时间 - 15分钟)

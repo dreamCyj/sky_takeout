@@ -51,4 +51,7 @@ public interface OrderMapper {
     List<Orders> getByStatusAndOrderTimeLT(Integer status, LocalDateTime orderTime);
 
     Double getAmountByDate(Map<Object, Object> map);
+
+
+    Integer getCountByDate(Map<Object, Object> map);
 }
