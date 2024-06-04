@@ -4,8 +4,8 @@ sky:
     host: localhost
     port: 3306
     database: sky_takeout
-    username: root
-    password: 1234
+    username: ****
+    password: ****
   jwt:
     # 设置jwt签名加密时使用的秘钥
     admin-secret-key: cyj1234
@@ -22,17 +22,17 @@ sky:
 
   alioss:
     endpoint: oss-cn-beijing.aliyuncs.com
-    access-key-id: LTAI5tM7R637hSP6Bg2ChkZb
-    access-key-secret: w15PIEw7LidW8F70CtLomm5fJvACTc
+    access-key-id: ****
+    access-key-secret: ****
     bucket-name: cyj-sky
   redis:
     host: localhost
     port: 6379
     database: 0
   wechat:
-    appid: wx1ab34b192bfac035
-    secret: 29b06f24f113ce3373d2b7844b4d3431
-    mchid: 1561414331
+    appid: ****
+    secret: ****
+    mchid: ****
     mch-serial-no:
     private-key-file-path:
     api-v3-key:
